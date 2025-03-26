@@ -1,10 +1,17 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+	import Plate from '../components/Plate.svelte';
+</script>
 
-<style>
-	p {
-		a {
-			color: green;
-		}
+<div class="container">
+	<Plate />
+</div>
+
+<style lang="scss">
+	.container {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
