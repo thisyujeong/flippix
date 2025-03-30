@@ -1,6 +1,10 @@
 @use './mixins';
 @use './default';
 
+body,
+html {
+	font-size: 0.52vw;
+}
 .sr-only {
 	position: absolute;
 	width: 1px;

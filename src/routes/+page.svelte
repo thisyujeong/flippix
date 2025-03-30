@@ -20,14 +20,18 @@
 
 <div class="container">
 	<div>
-		<p>
+		<p style:font-size="20px">
 			{#if time}
 				{hour}:{min}:{sec}
 			{/if}
 		</p>
 	</div>
 
-	<FilpDigit type="second" time={sec} />
+	<div style:display="flex" style:gap="6rem">
+		<FilpDigit type="second" time={hour} />
+		<FilpDigit type="second" time={min} />
+		<FilpDigit type="second" time={sec} />
+	</div>
 </div>
 
 <style lang="scss" scoped>

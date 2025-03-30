@@ -55,16 +55,17 @@
 
 <style lang="scss" scoped>
 	.panel {
-		--panel-height: 400px;
-		--panel-padding: 20px;
-		--panel-radius: 40px;
+		--panel-width: 27rem;
+		--panel-height: 36rem;
+		--panel-padding: 2rem;
+		--panel-radius: 4rem;
 		--panel-radius-child: calc(var(--panel-radius) - var(--panel-padding));
 		--panel-flip-height: calc(var(--panel-height) - var(--panel-padding) * 2);
 		--panel-flip-half-height: calc(var(--panel-flip-height) / 2);
 
-		width: 300px;
+		width: var(--panel-width);
 		height: var(--panel-height);
-		padding: 20px;
+		padding: var(--panel-padding);
 		border-radius: var(--panel-radius);
 		background-color: #111111;
 		border-top: 1px solid #78787880;
@@ -91,7 +92,7 @@
 			display: block;
 			left: 50%;
 			color: #fff;
-			font-size: 300px;
+			font-size: 30rem;
 			font-weight: 700;
 			transform: translateX(-50%);
 			line-height: var(--panel-flip-height);
