@@ -1,12 +1,16 @@
 <script>
-	import Plate from '../components/Plate.svelte';
+	import FlipPanel from '@/components/FlipPanel.svelte';
 </script>
 
 <div class="container">
-	<Plate />
+	<FlipPanel />
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	:global(body) {
+		/* background: #1e1e1e; */
+		background: linear-gradient(135deg, #e2e2e2, #ffffff);
+	}
 	.container {
 		width: 100vw;
 		height: 100vh;
