@@ -6,9 +6,9 @@
 	}
 
 	let { value: curr }: PanelProps = $props();
-	let prev: number = $state(curr - 1 < 0 ? 9 : curr - 1);
+	let prev: number = $state(curr);
 
-	let flipped = $state(false);
+	let flipped = $state(true);
 	let flipper: HTMLDivElement;
 
 	$effect(() => {
