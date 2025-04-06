@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { getTimeData } from '@/utils';
+	import { getTimeData, setTimer } from '@/utils';
 	import FilpDigit from '@/components/FilpDigit.svelte';
+	import { page } from '$app/state';
 
 	let { hour, min, sec } = getTimeData();
 
@@ -15,6 +16,10 @@
 	const clock = setInterval(updateTime, 500);
 
 	onDestroy(() => clearInterval(clock));
+
+	// TODO: 타이머 구현
+	// const timer = setTimer(page.url.search);
+	// console.log(timer);
 </script>
 
 <div class="container">
