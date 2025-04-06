@@ -67,6 +67,7 @@
 		border-radius: var(--panel-radius);
 		background-color: #111111;
 		border-top: 1px solid #78787880;
+		box-shadow: 0px 5px 2px 0px #b3bcc4;
 
 		&-inner {
 			position: relative;

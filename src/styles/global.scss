@@ -16,3 +16,36 @@ html {
 	border: 0;
 	clip: rect(0 0 0 0);
 }
+
+body {
+	/* common */
+	--basic-white: #ffffff;
+	--basic-black: #111111;
+
+	--text-color: var(--basic-black);
+	--background: linear-gradient(135deg, #e5ecf0, #ffffff);
+
+	/* panel */
+	--panel-color: #f5f4f8;
+	--panel-color: var(--basic-black);
+	--panel-text-color: var(--basic-black);
+	--panel-border-color: #787878;
+	--panel-shadow: 0px 5px 2px 0px #b3bcc4;
+}
+
+body[data-theme='dark'] {
+	/* common */
+	--text-color: var(--basic-white);
+	--background: linear-gradient(135deg, #000000, #282d33);
+
+	/* panel */
+	--panel-color: #191818;
+	--panel-text-color: var(--basic-white);
+	--panel-border-color: #4e536180;
+	--panel-shadow: 0px 5px 2px 0px #000;
+}
+
+body {
+	color: var(--text-color);
+	background: var(--background);
+}

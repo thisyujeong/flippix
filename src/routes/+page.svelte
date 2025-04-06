@@ -34,10 +34,6 @@
 </div>
 
 <style lang="scss" scoped>
-	:global(body) {
-		/* background: #1e1e1e; */
-		background: linear-gradient(135deg, #e2e2e2, #ffffff);
-	}
 	.container {
 		width: 100vw;
 		height: 100vh;
