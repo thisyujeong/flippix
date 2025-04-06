@@ -1,29 +1,27 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-
 	interface PanelProps {
 		value: number;
 	}
 
 	let { value: curr }: PanelProps = $props();
-	let prev: number = $state(curr);
+	let prev: number = $state(0);
 
-	let flipped = $state(true);
+	let flipped = $state(false);
 	let flipper: HTMLDivElement;
 
 	$effect(() => {
-		flipped = true;
-		flipper.style.transition = 'transform 0.4s ease-in-out';
+		if (curr !== prev) {
+			flipped = true;
+			flipper.style.transition = 'transform 0.4s ease-in-out';
 
-		prev = curr - 1 < 0 ? 9 : curr - 1;
+			const flipping = setTimeout(() => {
+				flipped = false;
+				flipper.style.transition = 'transform 0s';
+				prev = curr;
+			}, 450);
 
-		const flipping = setTimeout(() => {
-			flipped = false;
-			flipper.style.transition = 'transform 0s';
-			prev = curr;
-		}, 450);
-
-		onDestroy(() => flipping);
+			return () => clearTimeout(flipping);
+		}
 	});
 </script>
 

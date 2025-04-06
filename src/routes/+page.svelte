@@ -3,34 +3,33 @@
 	import { getTimeData } from '@/utils';
 	import FilpDigit from '@/components/FilpDigit.svelte';
 
-	let time = getTimeData(new Date());
-	let { hour, min, sec } = time;
+	let { hour, min, sec } = getTimeData();
 
 	const updateTime = () => {
-		const time = getTimeData(new Date());
+		const time = getTimeData();
 		hour = time.hour;
 		min = time.min;
 		sec = time.sec;
 	};
 
-	const timer = setInterval(updateTime, 500);
+	const clock = setInterval(updateTime, 500);
 
-	onDestroy(() => clearInterval(timer));
+	onDestroy(() => clearInterval(clock));
 </script>
 
 <div class="container">
-	<div>
-		<p style:font-size="20px">
-			{#if time}
-				{hour}:{min}:{sec}
-			{/if}
-		</p>
-	</div>
-
-	<div style:display="flex" style:gap="6rem">
-		<FilpDigit type="second" time={hour} />
-		<FilpDigit type="second" time={min} />
-		<FilpDigit type="second" time={sec} />
+	<div class="flip-clock" style:display="flex" style:gap="">
+		<FilpDigit type="hour" time={hour} />
+		<div class="flip-colon">
+			<span class="flip-colon__dot"></span>
+			<span class="flip-colon__dot"></span>
+		</div>
+		<FilpDigit type="minute" time={min} />
+		<div class="flip-colon">
+			<span class="flip-colon__dot"></span>
+			<span class="flip-colon__dot"></span>
+		</div>
+		<FilpDigit type="seconds" time={sec} />
 	</div>
 </div>
 
@@ -46,5 +45,44 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.flip-clock {
+		display: flex;
+		align-items: center;
+	}
+
+	.flip-colon {
+		padding: 0 2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 8rem;
+		animation: blinking 2s infinite;
+		transition: 0;
+
+		&__dot {
+			display: block;
+			width: 2rem;
+			height: 2rem;
+			background-color: #111;
+			line-height: 1;
+		}
+
+		@keyframes blinking {
+			0% {
+				opacity: 0;
+			}
+			33% {
+				opacity: 0;
+			}
+			34% {
+				opacity: 1;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
 	}
 </style>

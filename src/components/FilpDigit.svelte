@@ -2,7 +2,7 @@
 	import FlipPanel from './FlipPanel.svelte';
 
 	interface DigitProps {
-		type: 'hour' | 'minute' | 'second';
+		type: 'hour' | 'minute' | 'seconds';
 		time: string;
 	}
 
@@ -16,6 +16,7 @@
 
 <style lang="scss" scoped>
 	.flip-digit {
+		position: relative;
 		display: flex;
 		gap: 1rem;
 	}

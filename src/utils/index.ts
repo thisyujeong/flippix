@@ -4,7 +4,7 @@ export interface TimeData {
 	sec: string;
 }
 
-export const getTimeData = (date: Date): TimeData => {
+export const getTimeData = (date: Date = new SvelteDate()): TimeData => {
 	return {
 		hour: date.getHours().toString().padStart(2, '0'),
 		min: date.getMinutes().toString().padStart(2, '0'),
