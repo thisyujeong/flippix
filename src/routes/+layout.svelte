@@ -1,14 +1,17 @@
 <script lang="ts">
 	import '../styles/global.scss';
 	import Header from '../components/Header.svelte';
+	import { browser } from '$app/environment';
 
 	let { children } = $props();
 </script>
 
-<Header />
-<main>
-	{@render children()}
-</main>
+{#if browser}
+	<Header />
+	<main>
+		{@render children()}
+	</main>
+{/if}
 
 <style lang="scss">
 </style>

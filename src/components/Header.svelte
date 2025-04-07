@@ -1,31 +1,14 @@
 <script lang="ts">
-	import type { Action } from 'svelte/action';
-
-	let theme = $state<'light' | 'dark'>('light');
-
-	const themeToggle = () => {
-		console.log('toggle theme');
-		theme = theme === 'light' ? 'dark' : 'light';
-	};
-
-	const myaction: Action = (node) => {
-		node.dataset.theme = theme;
-		$effect(() => {
-			node.dataset.theme = theme;
-		});
-	};
+	import ThemeToggle from './ThemeToggle.svelte';
 </script>
-
-<svelte:body use:myaction />
 
 <header class="header">
 	<div class="header-id">
 		<h1>Digital Flip Clock</h1>
 		<p>ⓒ thisyujeong</p>
 	</div>
-	<div class="theme-switch">
-		<button onclick={themeToggle}>Theme toggle {theme}</button>
-	</div>
+
+	<ThemeToggle />
 </header>
 
 <style lang="scss" scoped>
@@ -48,12 +31,6 @@
 			margin-top: 0.4em;
 			font-size: 14px;
 			opacity: 0.75;
-		}
-	}
-
-	.theme-switch {
-		button {
-			color: var(--text-color);
 		}
 	}
 </style>
