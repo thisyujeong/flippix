@@ -39,7 +39,7 @@
 		</div>
 
 		<!-- flip panel -->
-		<div class={`panel-middle ${flipped && 'flipped'}`} bind:this={flipper}>
+		<div class="panel-middle" class:flipped bind:this={flipper}>
 			<div class="panel-upper panel-middle__front">
 				<span class="panel-digit">{prev}</span>
 			</div>
@@ -65,9 +65,10 @@
 		height: var(--panel-height);
 		padding: var(--panel-padding);
 		border-radius: var(--panel-radius);
-		background-color: #111111;
-		border-top: 1px solid #78787880;
-		box-shadow: 0px 5px 2px 0px #b3bcc4;
+		background-color: var(--panel-color);
+		border-top: 1px solid var(--panel-border-color);
+		border-left: 1px solid var(--panel-border-color);
+		box-shadow: var(--panel-shadow);
 
 		&-inner {
 			position: relative;
@@ -82,15 +83,14 @@
 			height: 100%;
 			display: flex;
 			flex-direction: column;
-			border-radius: 20px;
-			box-shadow: 1px 2px 2px #000;
+			border-radius: calc(var(--panel-radius) - var(--panel-padding));
 		}
 
 		&-digit {
 			position: absolute;
 			display: block;
 			left: 50%;
-			color: #fff;
+			color: var(--flip-text-color);
 			font-size: 30rem;
 			font-weight: 700;
 			transform: translateX(-50%);
@@ -101,13 +101,13 @@
 		&-upper {
 			flex: 1;
 			position: relative;
-			border-radius: var(--panel-radius-child) var(--panel-radius-child) 0 0;
-			border-top: 1px solid #787878;
-			box-sizing: border-box;
-			border-bottom: 2px solid #111111;
-			background: linear-gradient(to top, #131313, #252525);
-			overflow: hidden;
 			height: var(--panel-flip-half-height);
+			border-radius: var(--panel-radius-child) var(--panel-radius-child) 0 0;
+			box-sizing: border-box;
+			border-top: 1px solid #787878;
+			border-bottom: 0.3rem solid var(--panel-color);
+			background: var(--flip-upper-color);
+			overflow: hidden;
 
 			.panel-digit {
 				top: -1px;
@@ -118,8 +118,8 @@
 			height: var(--panel-flip-half-height);
 			position: relative;
 			border-radius: 0 0 var(--panel-radius-child) var(--panel-radius-child);
-			border-top: 2px solid #111111;
-			background: linear-gradient(to bottom, #1c1c1c, #292929);
+			border-top: 0.3rem solid var(--panel-color);
+			background: var(--flip-lower-color);
 			overflow: hidden;
 			.panel-digit {
 				bottom: 0;
@@ -159,6 +159,7 @@
 						left: 0;
 						width: 100%;
 						height: 100%;
+						margin-bottom: 0.3rem;
 						background-color: #000000a9;
 						backface-visibility: hidden;
 						transition: opacity 0.3s ease-in-out;

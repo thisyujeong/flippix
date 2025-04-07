@@ -3,10 +3,10 @@
 </script>
 
 <header class="header">
-	<div class="header-id">
+	<!-- <div class="header-id">
 		<h1>Digital Flip Clock</h1>
 		<p>ⓒ thisyujeong</p>
-	</div>
+	</div> -->
 
 	<ThemeToggle />
 </header>
@@ -18,7 +18,11 @@
 		left: 0;
 		right: 0;
 		text-align: center;
-		padding: 24px 0;
+		padding: 32px 0;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		gap: 3rem;
 	}
 
 	.header-id {

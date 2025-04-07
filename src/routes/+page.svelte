@@ -23,18 +23,25 @@
 </script>
 
 <div class="container">
-	<div class="flip-clock" style:display="flex" style:gap="">
-		<FilpDigit type="hour" time={hour} />
-		<div class="flip-colon">
-			<span class="flip-colon__dot"></span>
-			<span class="flip-colon__dot"></span>
+	<div class="clock" style:display="flex" style:gap="">
+		<dif class="clock-item">
+			<span>Hour</span>
+			<div class="clock-digit">
+				<FilpDigit type="hour" time={hour} />
+			</div>
+		</dif>
+		<div class="clock-item">
+			<span>Minute</span>
+			<div class="clock-digit">
+				<FilpDigit type="minute" time={min} />
+			</div>
 		</div>
-		<FilpDigit type="minute" time={min} />
-		<div class="flip-colon">
-			<span class="flip-colon__dot"></span>
-			<span class="flip-colon__dot"></span>
+		<div class="clock-item">
+			<span>Seconds</span>
+			<div class="clock-digit">
+				<FilpDigit type="seconds" time={sec} />
+			</div>
 		</div>
-		<FilpDigit type="seconds" time={sec} />
 	</div>
 </div>
 
@@ -48,42 +55,41 @@
 		justify-content: center;
 	}
 
-	.flip-clock {
+	.clock {
 		display: flex;
 		align-items: center;
-	}
+		gap: 6rem;
 
-	.flip-colon {
-		padding: 0 2rem;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 8rem;
-		animation: blinking 2s infinite;
-		transition: 0;
+		&-item {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			gap: 3rem;
 
-		&__dot {
-			display: block;
-			width: 2rem;
-			height: 2rem;
-			background-color: #111;
-			line-height: 1;
+			span {
+				font-size: 2.4rem;
+				text-transform: uppercase;
+				opacity: 0.7;
+			}
 		}
 
-		@keyframes blinking {
-			0% {
-				opacity: 0;
+		&-item + &-item {
+			.clock-digit::before {
+				content: '';
+				position: absolute;
+				display: block;
+				height: 5rem;
+				width: 4px;
+				position: absolute;
+				left: -3rem;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				background: var(--divider-color);
 			}
-			33% {
-				opacity: 0;
-			}
-			34% {
-				opacity: 1;
-			}
-			100% {
-				opacity: 1;
-			}
+		}
+
+		&-digit {
+			position: relative;
 		}
 	}
 </style>
