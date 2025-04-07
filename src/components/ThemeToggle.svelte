@@ -59,7 +59,7 @@
 		display: block;
 		width: 90px;
 		height: 50px;
-		padding: 4px;
+		padding: 5px;
 		border-radius: 100px;
 		border: 3px solid #e5ecf0;
 		background: #d5dce0;
@@ -71,11 +71,11 @@
 
 		&-handle {
 			position: absolute;
-			top: 4px;
-			right: 4px;
+			top: 5px;
+			right: 5px;
 			display: inline-block;
-			width: 36px;
-			height: 36px;
+			width: 34px;
+			height: 34px;
 			background: #e5ecf0;
 			border-radius: 50%;
 			box-shadow:
@@ -96,7 +96,7 @@
 				box-shadow:
 					-2px -2px 5px rgba(180, 192, 197, 0.44),
 					2px 2px 5px #0e0e0e70;
-				background: #d3d7db;
+				background: #22262a;
 			}
 		}
 	}

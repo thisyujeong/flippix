@@ -4,22 +4,16 @@
 	import FilpDigit from '@/components/FilpDigit.svelte';
 	import { page } from '$app/state';
 
-	let { hour, min, sec } = getTimeData();
+	let time = getTimeData();
+	let remainingTime = setTimer(page.url.search);
+	let timer: ReturnType<typeof setInterval>;
 
-	const updateTime = () => {
-		const time = getTimeData();
-		hour = time.hour;
-		min = time.min;
-		sec = time.sec;
-	};
-
-	const clock = setInterval(updateTime, 500);
+	// Basic Time
+	const clock = setInterval(() => {
+		time = getTimeData();
+	}, 500);
 
 	onDestroy(() => clearInterval(clock));
-
-	// TODO: 타이머 구현
-	// const timer = setTimer(page.url.search);
-	// console.log(timer);
 </script>
 
 <div class="container">
@@ -27,19 +21,19 @@
 		<dif class="clock-item">
 			<span>Hour</span>
 			<div class="clock-digit">
-				<FilpDigit type="hour" time={hour} />
+				<FilpDigit type="hour" time={time.hour} />
 			</div>
 		</dif>
 		<div class="clock-item">
 			<span>Minute</span>
 			<div class="clock-digit">
-				<FilpDigit type="minute" time={min} />
+				<FilpDigit type="minute" time={time.min} />
 			</div>
 		</div>
 		<div class="clock-item">
 			<span>Seconds</span>
 			<div class="clock-digit">
-				<FilpDigit type="seconds" time={sec} />
+				<FilpDigit type="seconds" time={time.sec} />
 			</div>
 		</div>
 	</div>
