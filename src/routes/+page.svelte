@@ -69,22 +69,22 @@
 			span {
 				font-size: 2.4rem;
 				text-transform: uppercase;
-				opacity: 0.7;
+				opacity: 0.85;
 			}
 		}
 
 		&-item + &-item {
 			.clock-digit::before {
 				content: '';
-				position: absolute;
 				display: block;
-				height: 5rem;
-				width: 4px;
 				position: absolute;
-				left: -3rem;
 				top: 50%;
+				left: -3rem;
+				width: 4px;
+				height: 5rem;
 				transform: translate(-50%, -50%);
 				background: var(--divider-color);
+				border-radius: 10rem;
 			}
 		}
 
