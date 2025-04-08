@@ -1,19 +1,45 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { getTimeData, setTimer } from '@/utils';
+	import { getEndTime, getDateTime, getTimer, getRemainTime, formatDigit } from '@/utils';
 	import FilpDigit from '@/components/FilpDigit.svelte';
 	import { page } from '$app/state';
 
-	let time = getTimeData();
-	let remainingTime = setTimer(page.url.search);
+	let displayTime = { hour: 0, min: 0, sec: 0 };
+
+	/* Timer Mode */
 	let timer: ReturnType<typeof setInterval>;
+	let timerValue = getTimer(page.url.search);
 
-	// Basic Time
-	const clock = setInterval(() => {
-		time = getTimeData();
-	}, 500);
+	if (timerValue) {
+		displayTime = timerValue;
 
-	onDestroy(() => clearInterval(clock));
+		const endTime = getEndTime(timerValue);
+		const updateTimer = () => {
+			const { isOver, remainTime } = getRemainTime(endTime);
+
+			if (isOver) clearInterval(timer);
+
+			displayTime = remainTime;
+		};
+
+		timer = setInterval(updateTimer, 1000);
+	}
+
+	/* Basic Time Mode */
+	let clock: ReturnType<typeof setInterval>;
+
+	if (!timerValue) {
+		displayTime = getDateTime();
+
+		clock = setInterval(() => {
+			displayTime = getDateTime();
+		}, 500);
+	}
+
+	onDestroy(() => {
+		clearInterval(clock);
+		clearInterval(timer);
+	});
 </script>
 
 <div class="container">
@@ -21,19 +47,19 @@
 		<dif class="clock-item">
 			<span>Hour</span>
 			<div class="clock-digit">
-				<FilpDigit type="hour" time={time.hour} />
+				<FilpDigit type="hour" time={formatDigit(displayTime.hour)} />
 			</div>
 		</dif>
 		<div class="clock-item">
 			<span>Minute</span>
 			<div class="clock-digit">
-				<FilpDigit type="minute" time={time.min} />
+				<FilpDigit type="minute" time={formatDigit(displayTime.min)} />
 			</div>
 		</div>
 		<div class="clock-item">
 			<span>Seconds</span>
 			<div class="clock-digit">
-				<FilpDigit type="seconds" time={time.sec} />
+				<FilpDigit type="seconds" time={formatDigit(displayTime.sec)} />
 			</div>
 		</div>
 	</div>
