@@ -1,55 +1,23 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
-	import { getEndTime, getDateTime, getTimer, getRemainTime, formatDigit } from '@/utils';
-	import FilpDigit from '@/components/FilpDigit.svelte';
 	import { page } from '$app/state';
+	import { onDestroy, onMount } from 'svelte';
+	import { getTimer, formatDigit } from '@/utils';
+	import { time, clear, startClock, startTimer } from '@/stores/timerStore';
+	import FilpDigit from '@/components/FilpDigit.svelte';
 
-	let displayTime = { hour: 0, min: 0, sec: 0 };
-	let interval: ReturnType<typeof setInterval>;
-	let isTimerMode = false;
-
-	/* Timer Mode */
-	function setupTimerMode(timerValue: typeof displayTime) {
-		const endTime = getEndTime(timerValue);
-		isTimerMode = true;
-
-		const updateTimer = () => {
-			const { isOver, remainTime } = getRemainTime(endTime);
-			displayTime = remainTime;
-
-			if (isOver) clearInterval(interval);
-		};
-
-		updateTimer();
-		interval = setInterval(updateTimer, 1000);
-	}
-
-	/* Clock Mode */
-	function setupCLockMode() {
-		isTimerMode = false;
-
-		const updateClock = () => {
-			displayTime = getDateTime();
-		};
-
-		updateClock();
-		interval = setInterval(updateClock, 500);
-	}
+	let timerValue = getTimer(page.url.search);
 
 	onMount(() => {
-		const timerValue = getTimer(page.url.search);
 		const isValidTimer = timerValue && Object.values(timerValue).some((v) => v > 0);
-
 		if (isValidTimer) {
-			displayTime = timerValue;
-			setupTimerMode(timerValue);
+			startTimer(timerValue);
 		} else {
-			setupCLockMode();
+			startClock();
 		}
 	});
 
 	onDestroy(() => {
-		clearInterval(interval);
+		clear();
 	});
 </script>
 
@@ -58,19 +26,19 @@
 		<div class="clock-item">
 			<span>Hour</span>
 			<div class="clock-digit">
-				<FilpDigit type="hour" time={formatDigit(displayTime.hour)} />
+				<FilpDigit type="hour" time={formatDigit($time.hour)} />
 			</div>
 		</div>
 		<div class="clock-item">
 			<span>Minute</span>
 			<div class="clock-digit">
-				<FilpDigit type="minute" time={formatDigit(displayTime.min)} />
+				<FilpDigit type="minute" time={formatDigit($time.min)} />
 			</div>
 		</div>
 		<div class="clock-item">
 			<span>Seconds</span>
 			<div class="clock-digit">
-				<FilpDigit type="seconds" time={formatDigit(displayTime.sec)} />
+				<FilpDigit type="seconds" time={formatDigit($time.sec)} />
 			</div>
 		</div>
 	</div>

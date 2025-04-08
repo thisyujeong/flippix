@@ -1,10 +1,5 @@
+import type { Time } from '@/types/time';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
-
-export interface Time {
-	hour: number;
-	min: number;
-	sec: number;
-}
 
 export const getDateTime = (date: Date = new Date()): Time => {
 	return {
