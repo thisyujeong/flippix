@@ -2,19 +2,57 @@
 	import { page } from '$app/state';
 	import { onDestroy, onMount } from 'svelte';
 	import { getTimer, formatDigit } from '@/utils';
-	import { time, clear, startClock, startTimer } from '@/stores/timerStore';
 	import FilpDigit from '@/components/FilpDigit.svelte';
+	import type { Time } from '@/types/time';
+	import {
+		time,
+		clear,
+		startClock,
+		startTimer,
+		pauseTimer,
+		resumeTimer,
+		restartTimer
+	} from '@/stores/timerStore';
 
-	let timerValue = getTimer(page.url.search);
+	let isRunning = true;
+	let isTimerMode = false;
+	let timerValue: Time | null = null;
+
+	const handleComplete = () => {
+		alert('⏰ 타이머가 종료되었습니다!');
+		isRunning = false;
+	};
 
 	onMount(() => {
+		timerValue = getTimer(page.url.search);
 		const isValidTimer = timerValue && Object.values(timerValue).some((v) => v > 0);
-		if (isValidTimer) {
-			startTimer(timerValue);
-		} else {
+
+		// 유효한 timer 값이 있을 경우 타이머 모드로 전환
+		if (isValidTimer && timerValue) {
+			isTimerMode = true;
+			startTimer(timerValue, handleComplete);
+		}
+		// 그렇지 않으면 일반 시계 모드 유지
+		else {
+			isTimerMode = false;
 			startClock();
 		}
 	});
+
+	function togglePauseResume() {
+		if (!isTimerMode) return;
+		if (isRunning) {
+			pauseTimer();
+		} else {
+			resumeTimer();
+		}
+		isRunning = !isRunning;
+	}
+
+	function hanedleRestart() {
+		restartTimer();
+		isRunning = true;
+	}
 
 	onDestroy(() => {
 		clear();
@@ -42,6 +80,16 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 타이머 모드일 때만 컨트롤 버튼 표시 -->
+	{#if isTimerMode}
+		<div class="controls">
+			<button onclick={togglePauseResume}>
+				{isRunning ? 'Pasue' : 'Resume'}
+			</button>
+			<button onclick={hanedleRestart}> Restart </button>
+		</div>
+	{/if}
 </div>
 
 <style lang="scss" scoped>
