@@ -13,6 +13,7 @@
 		resumeTimer,
 		restartTimer
 	} from '@/stores/timerStore';
+	import Button from '@/components/Button.svelte';
 
 	let isRunning = true;
 	let isTimerMode = false;
@@ -84,10 +85,10 @@
 	<!-- 타이머 모드일 때만 컨트롤 버튼 표시 -->
 	{#if isTimerMode}
 		<div class="controls">
-			<button onclick={togglePauseResume}>
+			<Button onclick={togglePauseResume}>
 				{isRunning ? 'Pasue' : 'Resume'}
-			</button>
-			<button onclick={hanedleRestart}> Restart </button>
+			</Button>
+			<Button onclick={hanedleRestart}>Restart</Button>
 		</div>
 	{/if}
 </div>
