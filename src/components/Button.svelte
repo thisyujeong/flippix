@@ -17,9 +17,10 @@
 
 <style lang="scss" scoped>
 	.button {
-		padding: 6px 16px;
+		padding: 1.2rem 4rem;
 		font-size: 2.4rem;
 		text-transform: uppercase;
-		border-radius: 10rem;
+		border-radius: 1rem;
+		color: var(--text-color);
 	}
 </style>

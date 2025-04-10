@@ -23,6 +23,7 @@ body {
 	--basic-black: #111111;
 
 	--text-color: var(--basic-black);
+	--text-reverse-color: var(--basic-white);
 	--background: linear-gradient(135deg, #e5ecf0, #ffffff);
 	--divider-color: #131313;
 
@@ -45,6 +46,7 @@ body[data-theme='dark'] {
 	/* panel */
 	--panel-color: #1b1e23;
 	--panel-text-color: var(--basic-white);
+	--text-reverse-color: var(--basic-black);
 	--panel-border-color: #71768280;
 	--panel-shadow: 0px 4px 6px 2px #00000090;
 
