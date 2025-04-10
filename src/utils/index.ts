@@ -1,6 +1,11 @@
 import type { Time } from '@/types/time';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
 
+/**
+ * Date 타입의 시간을 객체로 변환
+ * @param date 변환하고자하는 Date
+ * @returns Time 객체 { hour: number, min: number, sec: number }
+ */
 export const getDateTime = (date: Date = new Date()): Time => {
 	return {
 		hour: date.getHours(),
@@ -9,9 +14,37 @@ export const getDateTime = (date: Date = new Date()): Time => {
 	};
 };
 
+/**
+ * 두자리수로 문자열로 변환
+ * @param value 변환하고자 하는 숫자
+ * @returns 두자리수 문자열로 반환, ex. 1 -> 01
+ */
 export const formatDigit = (value: number) => {
 	return value.toString().padStart(2, '0');
 };
+
+/**
+ * 초 단위를 Time 객체로 변환
+ * @param seconds Date time
+ * @returns Time 객체 { hour: number, min: number, sec: number }
+ */
+export function toTimeObject(seconds: number): Time {
+	const safeSeconds = Math.max(0, seconds); // 음수 방지
+	return {
+		hour: Math.floor(safeSeconds / 3600),
+		min: Math.floor((safeSeconds % 3600) / 60),
+		sec: safeSeconds % 60
+	};
+}
+
+/**
+ * Time 객체를 초 단위로 변환
+ * @param time Time 객체 { hour: number, min: number, sec: number }
+ * @returns Date timestamp
+ */
+export function toSeconds(time: Time): number {
+	return time.hour * 3600 + time.min * 60 + time.sec;
+}
 
 /**
  * Query string 타이머 설정값 추출

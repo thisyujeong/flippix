@@ -1,11 +1,11 @@
 import type { Time } from '@/types/time';
-import { getDateTime, getEndTime, getRemainTime } from '@/utils';
+import { getDateTime, getEndTime, getRemainTime, toSeconds, toTimeObject } from '@/utils';
 import { writable } from 'svelte/store';
 
 export const time = writable<Time>({ hour: 0, min: 0, sec: 0 });
 
 let interval: ReturnType<typeof setInterval> | null = null;
-let endTime: Date | null = null;
+let currentSeconds: number = 0;
 let remainingAtPause: Time | null = null;
 let onCompleteCallback: (() => void) | null = null;
 let initialTimerValue: Time | null = null;
@@ -29,23 +29,23 @@ export function startClock() {
 export function startTimer(initialTime: Time, onComplete?: () => void) {
 	clear();
 	initialTimerValue = initialTime;
-	endTime = getEndTime(initialTime);
 	onCompleteCallback = onComplete ?? null;
 
-	const tick = () => {
-		if (!endTime) return;
+	// 초 단위로 환산
+	currentSeconds = toSeconds(initialTime);
 
-		const { isOver, remainTime } = getRemainTime(endTime);
-		time.set(remainTime);
+	// 초기 시간 표시
+	time.set(toTimeObject(currentSeconds));
 
-		if (isOver) {
+	interval = setInterval(() => {
+		currentSeconds--;
+		time.set(toTimeObject(currentSeconds));
+
+		if (currentSeconds <= 0) {
 			clear();
 			onCompleteCallback?.();
 		}
-	};
-
-	tick();
-	interval = setInterval(tick, 1000);
+	}, 1000);
 }
 
 /**
@@ -56,12 +56,7 @@ export function pauseTimer() {
 	if (interval) {
 		clearInterval(interval);
 		interval = null;
-
-		time.subscribe((value) => {
-			remainingAtPause = value;
-		})();
-
-		endTime = null;
+		remainingAtPause = toTimeObject(currentSeconds);
 	}
 }
 
@@ -95,7 +90,7 @@ export function clear() {
 		interval = null;
 	}
 
-	endTime = null;
+	currentSeconds = 0;
 	remainingAtPause = null;
 	onCompleteCallback = null;
 	initialTimerValue = null;
