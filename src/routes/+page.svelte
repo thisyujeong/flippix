@@ -18,6 +18,9 @@
 	let isRunning = true;
 	let isTimerMode = false;
 	let timerValue: Time | null = null;
+	let initialTime = getTimer(page.url.search);
+
+	console.log(initialTime);
 
 	const handleComplete = () => {
 		alert('⏰ 타이머가 종료되었습니다!');
@@ -83,9 +86,14 @@
 	</div>
 
 	<!-- 타이머 모드일 때만 컨트롤 버튼 표시 -->
-	{#if isTimerMode}
+	{#if isTimerMode && initialTime}
 		<div class="controller">
-			<Controller {isRunning} onPauseResume={togglePauseResume} onRestart={handleRestart} />
+			<Controller
+				{initialTime}
+				{isRunning}
+				onPauseResume={togglePauseResume}
+				onRestart={handleRestart}
+			/>
 		</div>
 	{/if}
 </div>

@@ -2,9 +2,8 @@
 	import { progress } from '@/stores/timerStore';
 	import { derived } from 'svelte/store';
 
-	// const radius = (svgSize - strokeWidth) / 2
-	const size = 100;
-	const strokeWidth = 12;
+	const size = 68;
+	const strokeWidth = 8;
 	const radius = (size - strokeWidth) / 2;
 	const circumference = 2 * Math.PI * radius;
 
@@ -23,14 +22,15 @@
 		<defs>
 			<!-- 기본 그라데이션 (파랑 → 하늘) -->
 			<linearGradient id="normalGradient" x1="1" y1="0" x2="0" y2="1">
-				<stop offset="0%" stop-color="#b388fc" />
-				<stop offset="100%" stop-color="#c561fa" />
+				<stop offset="0%" stop-color="#ace4d2" />
+				<stop offset="50%" stop-color="#6df997" />
+				<stop offset="100%" stop-color="#42de6c" />
 			</linearGradient>
 
 			<!-- 위험 그라데이션 (빨강 → 주황) -->
 			<linearGradient id="dangerGradient" x1="0" y1="0" x2="1" y2="1">
-				<stop offset="100%" stop-color="#ffa940" />
-				<stop offset="0%" stop-color="#ff4d4f" />
+				<stop offset="100%" stop-color="#ff4d4f" />
+				<stop offset="0%" stop-color="#ffa940" />
 			</linearGradient>
 		</defs>
 
@@ -74,8 +74,8 @@
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			font-size: 2rem;
-			color: #b388fc;
+			font-size: 14px;
+			color: var(--text-reverse-color);
 			font-weight: bold;
 			transform: translate(-50%, -50%);
 		}

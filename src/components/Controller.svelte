@@ -1,53 +1,57 @@
 <script lang="ts">
-	import { progress } from '@/stores/timerStore';
-	import { getTimer } from '@/utils';
-	import { page } from '$app/state';
-	import Button from './Button.svelte';
 	import TimeProgress from './TimeProgress.svelte';
+	import type { Time } from '@/types/time';
 
 	interface ControllerProps {
+		initialTime: Time;
 		isRunning: boolean;
 		onPauseResume: () => void;
 		onRestart: () => void;
 	}
 
-	let initialTime = getTimer(page.url.search);
+	const { initialTime, isRunning, onPauseResume, onRestart }: ControllerProps = $props();
+	const { hour, min, sec } = initialTime;
 
-	const { isRunning, onPauseResume, onRestart }: ControllerProps = $props();
+	console.log(hour, min, sec);
 </script>
 
 <div class="control-wrapper">
-	<div class="control-buttons">
+	<!-- <div class="control-buttons">
 		<Button onclick={onPauseResume}>
 			{isRunning ? 'Pause' : 'Resume'}
 		</Button>
 		<Button onclick={onRestart}>Restart</Button>
-	</div>
-	{#if initialTime}
-		<div class="control-timer">
-			<p class="label">You set the timer:</p>
+	</div> -->
+
+	<div class="time-status">
+		<div class="time-set">
+			<p class="label">Set the timer</p>
 			<p class="value">
-				{#if initialTime.hour > 0}
-					{initialTime.hour + 'h'}
+				<!-- Hour -->
+				{#if hour > 0}
+					{hour + 'h'}
 				{/if}
-				{#if initialTime.min > 0}
-					{initialTime.hour + 'm'}
+
+				<!-- Minuites -->
+				{#if (hour > 0 && sec > 0) || min > 0}
+					{min + 'm'}
 				{/if}
-				{#if initialTime.sec > 0}
-					{initialTime.sec + 's'}
+
+				<!-- Secconds -->
+				{#if sec > 0}
+					{sec + 's'}
 				{/if}
 			</p>
 		</div>
-	{/if}
 
-	<TimeProgress />
+		<TimeProgress />
+	</div>
 </div>
 
 <style lang="scss">
 	.control-wrapper {
 		border-radius: 2.4rem;
 		padding: 2rem;
-		border: 1px solid #f9fafb4c;
 	}
 
 	.control-buttons {
@@ -64,6 +68,30 @@
 			text-align: center;
 			font-size: 3rem;
 			font-weight: 700;
+		}
+	}
+
+	.time-status {
+		padding: 12px 12px 12px 32px;
+		border-radius: 100px;
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		background: var(--controller-bg);
+		border-top: 1px solid var(--controller-border-color);
+		box-shadow: var(--controller-shadow);
+
+		.time-set {
+			.label {
+				font-size: 16px;
+				color: var(--text-reverse-color);
+				opacity: 0.8;
+			}
+			.value {
+				font-size: 24px;
+				font-weight: bold;
+				color: var(--text-reverse-color);
+			}
 		}
 	}
 </style>

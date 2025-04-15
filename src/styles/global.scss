@@ -26,7 +26,7 @@ body {
 	--text-reverse-color: var(--basic-white);
 	--background: linear-gradient(135deg, #e5ecf0, #ffffff);
 	--divider-color: #131313;
-
+	color: #ace4d2;
 	/* panel */
 	--panel-color: #f5f4f8;
 	--panel-border-color: #ffffff;
@@ -35,6 +35,12 @@ body {
 	--flip-text-color: var(--basic-white);
 	--flip-upper-color: linear-gradient(to top, #131313, #252525);
 	--flip-lower-color: linear-gradient(to bottom, #1c1c1c, #292929);
+
+	/* controller */
+	--controller-bg: var(--basic-black);
+	--controller-circle-bg: #787878;
+	--controller-border-color: #000000;
+	--controller-shadow: inset 4px 4px 4px #404b3c, inset -4px -4px 4px #000000;
 }
 
 body[data-theme='dark'] {
@@ -53,6 +59,12 @@ body[data-theme='dark'] {
 	--flip-text-color: var(--basic-black);
 	--flip-upper-color: linear-gradient(to top, #d1d6da, #ffffff);
 	--flip-lower-color: linear-gradient(to bottom, #d1d6da, #e9edef);
+
+	/* controller */
+	--controller-bg: #f9fafa;
+	--controller-circle-bg: #e5e5e5;
+	--controller-border-color: var(--basic-white);
+	--controller-shadow: inset 4px 4px 4px #ffffff, inset -4px -4px 4px #d5d9dd;
 }
 
 body {
