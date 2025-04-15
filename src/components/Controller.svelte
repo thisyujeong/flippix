@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { ClassValue } from 'svelte/elements';
-	import Button from './Button.svelte';
-	import { time } from '@/stores/timerStore';
-	import { formatDigit, getTimer } from '@/utils';
+	import { progress } from '@/stores/timerStore';
+	import { getTimer } from '@/utils';
 	import { page } from '$app/state';
+	import Button from './Button.svelte';
+	import TimeProgress from './TimeProgress.svelte';
 
 	interface ControllerProps {
 		isRunning: boolean;
@@ -16,17 +16,17 @@
 	const { isRunning, onPauseResume, onRestart }: ControllerProps = $props();
 </script>
 
-<div class="controls">
-	<div class="buttons">
+<div class="control-wrapper">
+	<div class="control-buttons">
 		<Button onclick={onPauseResume}>
 			{isRunning ? 'Pause' : 'Resume'}
 		</Button>
 		<Button onclick={onRestart}>Restart</Button>
 	</div>
 	{#if initialTime}
-		<div class="time">
-			<p class="time-label">You set the timer:</p>
-			<p class="time-value">
+		<div class="control-timer">
+			<p class="label">You set the timer:</p>
+			<p class="value">
 				{#if initialTime.hour > 0}
 					{initialTime.hour + 'h'}
 				{/if}
@@ -39,29 +39,30 @@
 			</p>
 		</div>
 	{/if}
+
+	<TimeProgress />
 </div>
 
 <style lang="scss">
-	.controls {
-		// background: linear-gradient(to bottom, #eff2f8 2%, #d5e5d6 150%);
+	.control-wrapper {
 		border-radius: 2.4rem;
 		padding: 2rem;
-		// box-shadow: 0px 6px 10px #9eafad7c;
 		border: 1px solid #f9fafb4c;
 	}
-	.buttons {
+
+	.control-buttons {
 		display: flex;
 		gap: 2rem;
 	}
-	.time {
-		&-label {
+
+	.control-timer {
+		.label {
 			font-size: 2rem;
 			opacity: 0.4;
 		}
-		&-value {
+		.value {
 			text-align: center;
 			font-size: 3rem;
-			// color: var(--text-reverse-color);
 			font-weight: 700;
 		}
 	}

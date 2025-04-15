@@ -1,8 +1,10 @@
 import type { Time } from '@/types/time';
-import { getDateTime, getEndTime, getRemainTime, toSeconds, toTimeObject } from '@/utils';
+import { getDateTime, toSeconds, toTimeObject } from '@/utils';
 import { writable } from 'svelte/store';
 
 export const time = writable<Time>({ hour: 0, min: 0, sec: 0 });
+export const progress = writable(100); // 0 ~ 100%
+let totalSeconds: number = 0; // 전체 타이머 길이
 
 let interval: ReturnType<typeof setInterval> | null = null;
 let currentSeconds: number = 0;
@@ -31,15 +33,16 @@ export function startTimer(initialTime: Time, onComplete?: () => void) {
 	initialTimerValue = initialTime;
 	onCompleteCallback = onComplete ?? null;
 
-	// 초 단위로 환산
-	currentSeconds = toSeconds(initialTime);
+	currentSeconds = toSeconds(initialTime); // 초 단위로 환산
+	totalSeconds = currentSeconds;
 
-	// 초기 시간 표시
-	time.set(toTimeObject(currentSeconds));
+	time.set(toTimeObject(currentSeconds)); // 초기 시간 표시
+	progress.set(100);
 
 	interval = setInterval(() => {
 		currentSeconds--;
 		time.set(toTimeObject(currentSeconds));
+		progress.set(Math.floor((currentSeconds / totalSeconds) * 100)); // 진행률 계산
 
 		if (currentSeconds <= 0) {
 			clear();

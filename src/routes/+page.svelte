@@ -112,7 +112,7 @@
 			gap: 3rem;
 
 			span {
-				font-size: 2.4rem;
+				font-size: 2rem;
 				text-transform: uppercase;
 				opacity: 0.85;
 			}
