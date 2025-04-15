@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	interface PanelProps {
 		value: number;
 	}
@@ -9,19 +11,20 @@
 	let flipped = $state(false);
 	let flipper: HTMLDivElement;
 
+	onMount(() => (prev = curr));
+
 	$effect(() => {
-		if (curr !== prev) {
-			flipped = true;
-			flipper.style.transition = 'transform 0.4s ease-in-out';
+		if (curr === prev) return;
+		flipped = true;
+		flipper.style.transition = 'transform 0.4s ease-in-out';
 
-			const flipping = setTimeout(() => {
-				flipped = false;
-				flipper.style.transition = 'transform 0s';
-				prev = curr;
-			}, 450);
+		const flipping = setTimeout(() => {
+			flipped = false;
+			flipper.style.transition = 'transform 0s';
+			prev = curr;
+		}, 450);
 
-			return () => clearTimeout(flipping);
-		}
+		return () => clearTimeout(flipping);
 	});
 </script>
 
