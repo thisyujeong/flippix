@@ -147,7 +147,7 @@
 				background-image: url('/static/assets/icon/ic-play_wh.svg');
 			}
 			button.restart span {
-				background-image: url('/static/assets/icon/ic-pause_wh.svg');
+				background-image: url('/static/assets/icon/ic-replay_wh.svg');
 			}
 		}
 	}

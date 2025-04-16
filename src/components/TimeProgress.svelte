@@ -26,13 +26,13 @@
 >
 	<svg class="progress-circle" width={size} height={size}>
 		<defs>
-			<!-- 기본 그라데이션 (파랑 → 하늘) -->
+			<!-- 기본 그라데이션 -->
 			<linearGradient id="normalGradient" x1="1" y1="0" x2="0" y2="1">
 				<stop offset="0%%" stop-color="#6df997" />
 				<stop offset="100%" stop-color="#42de6c" />
 			</linearGradient>
 
-			<!-- 위험 그라데이션 (빨강 → 주황) -->
+			<!-- 위험 그라데이션 -->
 			<linearGradient id="dangerGradient" x1="0" y1="0" x2="1" y2="1">
 				<stop offset="100%" stop-color="#ff4d4f" />
 				<stop offset="0%" stop-color="#ffa940" />
