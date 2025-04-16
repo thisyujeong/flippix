@@ -17,17 +17,18 @@ html {
 	clip: rect(0 0 0 0);
 }
 
-body {
-	/* common */
+html {
+	// common
 	--basic-white: #ffffff;
 	--basic-black: #111111;
+	--active-color: #42de6c;
 
 	--text-color: var(--basic-black);
 	--text-reverse-color: var(--basic-white);
 	--background: linear-gradient(135deg, #e5ecf0, #ffffff);
 	--divider-color: #131313;
 	color: #ace4d2;
-	/* panel */
+	// panel
 	--panel-color: #f5f4f8;
 	--panel-border-color: #ffffff;
 	--panel-shadow: 0px 4px 6px 1px #b3c2d0;
@@ -36,20 +37,21 @@ body {
 	--flip-upper-color: linear-gradient(to top, #131313, #252525);
 	--flip-lower-color: linear-gradient(to bottom, #1c1c1c, #292929);
 
-	/* controller */
-	--controller-bg: var(--basic-black);
-	--controller-circle-bg: #787878;
-	--controller-border-color: #000000;
-	--controller-shadow: inset 4px 4px 4px #404b3c, inset -4px -4px 4px #000000;
+	// controller
+	--controller-bg: #e6ecf0;
+	--controller-hover-bg: #d1dbe1;
+
+	// progress
+	--progress-track-bg: #eee;
 }
 
-body[data-theme='dark'] {
-	/* common */
+html[data-theme='dark'] {
+	// common
 	--text-color: var(--basic-white);
 	--background: linear-gradient(135deg, #1c1e21, #282d33);
 	--divider-color: #ececec;
 
-	/* panel */
+	// panel
 	--panel-color: #1b1e23;
 	--panel-text-color: var(--basic-white);
 	--text-reverse-color: var(--basic-black);
@@ -60,11 +62,12 @@ body[data-theme='dark'] {
 	--flip-upper-color: linear-gradient(to top, #d1d6da, #ffffff);
 	--flip-lower-color: linear-gradient(to bottom, #d1d6da, #e9edef);
 
-	/* controller */
-	--controller-bg: #f9fafa;
-	--controller-circle-bg: #e5e5e5;
-	--controller-border-color: var(--basic-white);
-	--controller-shadow: inset 4px 4px 4px #ffffff, inset -4px -4px 4px #d5d9dd;
+	// controller
+	--controller-bg: var(--basic-black);
+	--controller-hover-bg: #636363;
+
+	// progress
+	--progress-track-bg: var(--basic-black);
 }
 
 body {

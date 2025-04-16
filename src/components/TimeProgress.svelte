@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { progress } from '@/stores/timerStore';
+	import { progress, totalSeconds } from '@/stores/timerStore';
 	import { derived } from 'svelte/store';
 
 	const size = 68;
@@ -14,16 +14,21 @@
 	);
 
 	// 위험 구간에 따라 색상 모드 전환
-	const isDanger = derived(progress, ($progress) => $progress <= 20);
+	const isDanger = derived(
+		progress,
+		($progress) => Math.floor(($totalSeconds * $progress) / 100) <= 5
+	);
 </script>
 
-<div class="progress-wrapper">
-	<svg class="progress-circle" width={size} height={size} style="--stroke-width:{strokeWidth};">
+<div
+	class="progress-wrapper"
+	style="--progress-stroke-width:{strokeWidth}; --progress-size:{size}px"
+>
+	<svg class="progress-circle" width={size} height={size}>
 		<defs>
 			<!-- 기본 그라데이션 (파랑 → 하늘) -->
 			<linearGradient id="normalGradient" x1="1" y1="0" x2="0" y2="1">
-				<stop offset="0%" stop-color="#ace4d2" />
-				<stop offset="50%" stop-color="#6df997" />
+				<stop offset="0%%" stop-color="#6df997" />
 				<stop offset="100%" stop-color="#42de6c" />
 			</linearGradient>
 
@@ -55,28 +60,29 @@
 	.progress-wrapper {
 		position: relative;
 		display: inline-block;
+		width: var(--progress-size);
+		height: var(--progress-size);
 		.progress-circle {
 			transform: rotate(-90deg);
 		}
 		circle {
 			fill: none;
-			stroke-width: var(--stroke-width);
+			stroke-width: var(--progress-stroke-width);
 		}
 		.bg {
-			stroke: #eee;
+			stroke: var(--progress-track-bg);
 		}
 		.bar {
 			stroke-linecap: round;
 			transition: stroke-dashoffset 0.5s ease;
 		}
-
 		.label {
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			font-size: 14px;
-			color: var(--text-reverse-color);
-			font-weight: bold;
+			font-size: 16px;
+			color: var(--text-color);
+			font-weight: 400;
 			transform: translate(-50%, -50%);
 		}
 	}

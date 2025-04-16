@@ -149,5 +149,6 @@
 	.controller {
 		position: fixed;
 		bottom: 4rem;
+		width: calc(100vw - 12rem);
 	}
 </style>

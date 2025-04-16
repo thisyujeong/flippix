@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { theme } from '@/stores/themeStore';
 	import TimeProgress from './TimeProgress.svelte';
 	import type { Time } from '@/types/time';
 
@@ -16,47 +17,46 @@
 </script>
 
 <div class="control-wrapper">
-	<!-- <div class="control-buttons">
-		<Button onclick={onPauseResume}>
-			{isRunning ? 'Pause' : 'Resume'}
-		</Button>
-		<Button onclick={onRestart}>Restart</Button>
-	</div> -->
-
-	<div class="time-status">
-		<div class="time-set">
-			<p class="label">Set the timer</p>
-			<p class="value">
+	<div class="control-info">
+		<div class="time">
+			<p class="time-label">Set the timer:</p>
+			<p class="time-value">
 				<!-- Hour -->
 				{#if hour > 0}
-					{hour + 'h'}
+					<strong>{hour}</strong>hour
 				{/if}
 
 				<!-- Minuites -->
 				{#if (hour > 0 && sec > 0) || min > 0}
-					{min + 'm'}
+					<strong>{min}</strong>min
 				{/if}
 
 				<!-- Secconds -->
 				{#if sec > 0}
-					{sec + 's'}
+					<strong>{sec}</strong>sec
 				{/if}
 			</p>
 		</div>
 
-		<TimeProgress />
+		<div class={['control-buttons', $theme]}>
+			<button class={isRunning ? 'pause' : 'resume'} onclick={onPauseResume}>
+				<span>{isRunning ? 'Pause' : 'Resume'}</span>
+			</button>
+			<button class="restart" onclick={onRestart}>
+				<span>Restart</span>
+			</button>
+		</div>
 	</div>
+
+	<TimeProgress />
 </div>
 
 <style lang="scss">
 	.control-wrapper {
-		border-radius: 2.4rem;
-		padding: 2rem;
-	}
-
-	.control-buttons {
 		display: flex;
-		gap: 2rem;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 24px;
 	}
 
 	.control-timer {
@@ -71,26 +71,83 @@
 		}
 	}
 
-	.time-status {
-		padding: 12px 12px 12px 32px;
-		border-radius: 100px;
+	.control-info {
 		display: flex;
-		align-items: center;
-		gap: 24px;
-		background: var(--controller-bg);
-		border-top: 1px solid var(--controller-border-color);
-		box-shadow: var(--controller-shadow);
+		flex-direction: column;
+		gap: 12px;
 
-		.time-set {
-			.label {
+		.time {
+			padding-left: 8px;
+			&-label {
 				font-size: 16px;
-				color: var(--text-reverse-color);
+				color: var(--text-color);
 				opacity: 0.8;
 			}
-			.value {
-				font-size: 24px;
-				font-weight: bold;
-				color: var(--text-reverse-color);
+			&-value {
+				font-size: 20px;
+				font-weight: 400;
+				strong {
+					margin: 0 3px;
+					font-size: 24px;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.control-buttons {
+		display: flex;
+		gap: 1.2rem;
+		button {
+			width: 120px;
+			padding: 12px;
+			color: var(--text-color);
+			font-size: 16px;
+			background: var(--controller-bg);
+			border-radius: 10px;
+
+			border: 2px solid transparent;
+			span {
+				padding-left: 28px;
+				background-size: 20px;
+				background-position: left center;
+				background-repeat: no-repeat;
+			}
+			&:hover {
+				background: var(--active-color);
+			}
+			&:active {
+				transform: scale(0.95);
+			}
+		}
+
+		&.light button,
+		&.dark button:hover {
+			span {
+				color: var(--basic-black);
+			}
+
+			&.pause span {
+				background-image: url('/static/assets/icon/ic-pause_bk.svg');
+			}
+			&.resume span {
+				background-image: url('/static/assets/icon/ic-play_bk.svg');
+				padding-left: 28px;
+			}
+			&.restart span {
+				background-image: url('/static/assets/icon/ic-replay_bk.svg');
+			}
+		}
+
+		&.dark {
+			button.pause span {
+				background-image: url('/static/assets/icon/ic-pause_wh.svg');
+			}
+			button.resume span {
+				background-image: url('/static/assets/icon/ic-play_wh.svg');
+			}
+			button.restart span {
+				background-image: url('/static/assets/icon/ic-pause_wh.svg');
 			}
 		}
 	}
