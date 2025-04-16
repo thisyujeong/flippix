@@ -1,41 +1,13 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
-	import type { Action } from 'svelte/action';
-
-	type ThemeType = 'light' | 'dark';
-
-	let theme = $state<ThemeType>('light');
-
-	const themeToggle = () => {
-		console.log('toggle theme');
-		theme = theme === 'light' ? 'dark' : 'light';
-	};
-
-	const myaction: Action = (node) => {
-		$effect(() => {
-			node.dataset.theme = theme;
-			localStorage.setItem('data-theme', theme);
-		});
-	};
-
-	onMount(() => {
-		if (browser) {
-			const storedTheme = localStorage.getItem('data-theme');
-			theme = storedTheme === 'dark' ? 'dark' : 'light';
-			document.documentElement.setAttribute('data-theme', theme);
-		}
-	});
+	import { theme, toggleTheme } from '@/stores/themeStore';
 </script>
 
-<svelte:body use:myaction />
-
 <div class="switch-box">
-	<span class="switch-mode" class:on={theme === 'dark'}>Dark</span>
-	<button class="switch" onclick={themeToggle} class:is-dark={theme === 'dark'}>
+	<span class="switch-mode" class:on={$theme === 'dark'}>Dark</span>
+	<button class="switch" onclick={toggleTheme} class:is-dark={$theme === 'dark'}>
 		<span class="switch-handle"></span>
 	</button>
-	<span class="switch-mode" class:on={theme === 'light'}>Light</span>
+	<span class="switch-mode" class:on={$theme === 'light'}>Light</span>
 </div>
 
 <style lang="scss" scoped>
