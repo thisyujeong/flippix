@@ -12,8 +12,6 @@
 
 	const { initialTime, isRunning, onPauseResume, onRestart }: ControllerProps = $props();
 	const { hour, min, sec } = initialTime;
-
-	console.log(hour, min, sec);
 </script>
 
 <div class="control-wrapper">
@@ -104,9 +102,7 @@
 			color: var(--text-color);
 			font-size: 16px;
 			background: var(--controller-bg);
-			border-radius: 10px;
-
-			border: 2px solid transparent;
+			border-radius: 999px;
 			span {
 				padding-left: 28px;
 				background-size: 20px;

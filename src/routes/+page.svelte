@@ -20,8 +20,6 @@
 	let timerValue: Time | null = null;
 	let initialTime = getTimer(page.url.search);
 
-	console.log(initialTime);
-
 	const handleComplete = () => {
 		alert('⏰ 타이머가 종료되었습니다!');
 		isRunning = false;

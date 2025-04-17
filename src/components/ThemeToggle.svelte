@@ -2,73 +2,46 @@
 	import { theme, toggleTheme } from '@/stores/themeStore';
 </script>
 
-<div class="switch-box">
-	<span class="switch-mode" class:on={$theme === 'dark'}>Dark</span>
-	<button class="switch" onclick={toggleTheme} class:is-dark={$theme === 'dark'}>
-		<span class="switch-handle"></span>
-	</button>
-	<span class="switch-mode" class:on={$theme === 'light'}>Light</span>
-</div>
+<button class="switch" class:on={$theme === 'light'} onclick={toggleTheme}>
+	<span class="switch-icon">
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+			<path
+				d="M18.364 5.63604C16.6761 3.94821 14.3869 3 12 3C9.61305 3 7.32387 3.94821 5.63604 5.63604C3.94821 7.32387 3 9.61305 3 12C3 14.3869 3.94821 16.6761 5.63604 18.364L12 12L18.364 5.63604Z"
+				fill="currentColor"
+			/>
+		</svg>
+	</span>
+	<span class="switch-text">{$theme === 'dark' ? 'on' : 'off'}</span>
+</button>
 
 <style lang="scss" scoped>
-	.switch-box {
+	.switch {
 		display: flex;
 		align-items: center;
-		gap: 20px;
-	}
-	.switch-mode {
-		width: 40px;
-		font-size: 16px;
-		text-align: center;
-		opacity: 0.5;
+		gap: 8px;
+
+		&-icon {
+			width: 20px;
+			height: 20px;
+			transition: 0.3s;
+
+			svg {
+				width: 20px;
+				height: 20px;
+				color: var(--text-color);
+			}
+		}
+
+		&-text {
+			font-size: 16px;
+			text-transform: uppercase;
+			color: var(--text-color);
+		}
+
 		&.on {
-			opacity: 1;
-			font-weight: bold;
-		}
-	}
-	.switch {
-		position: relative;
-		display: block;
-		width: 90px;
-		height: 50px;
-		padding: 5px;
-		border-radius: 100px;
-		border: 3px solid #e5ecf0;
-		background: #d5dce0;
-		box-shadow:
-			inset 0px 1px 6px #b5c1c6,
-			-2px -2px 6px #ffffff,
-			2px 2px 5px #afbdc8;
-		overflow: hidden;
-
-		&-handle {
-			position: absolute;
-			top: 5px;
-			right: 5px;
-			display: inline-block;
-			width: 34px;
-			height: 34px;
-			background: #e5ecf0;
-			border-radius: 50%;
-			box-shadow:
-				-2px -2px 5px #ffffff70,
-				2px 2px 5px #afbdc8;
-			transition: 0.3s ease;
-		}
-
-		&.is-dark {
-			background: #42de6c;
-			border-color: #22262c;
-			box-shadow:
-				inset 0px 1px 6px #0e0e0e,
-				-2px -2px 6px #4d566c,
-				2px 2px 5px #000000;
-			.switch-handle {
-				right: calc(100% - 40px);
-				box-shadow:
-					-2px -2px 5px rgba(180, 192, 197, 0.44),
-					2px 2px 5px #0e0e0e70;
-				background: #22262a;
+			.switch-icon {
+				transform: rotate(180deg);
 			}
 		}
 	}
