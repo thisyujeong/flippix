@@ -43,6 +43,10 @@ html {
 
 	// progress
 	--progress-track-bg: #eee;
+
+	// toast
+	--toast-bg: var(--controller-bg);
+	--toast-border: #d9e0e5;
 }
 
 html[data-theme='dark'] {
@@ -68,6 +72,10 @@ html[data-theme='dark'] {
 
 	// progress
 	--progress-track-bg: var(--basic-black);
+
+	// toast
+	--toast-bg: #3d4145;
+	--toast-border: #525659;
 }
 
 body {

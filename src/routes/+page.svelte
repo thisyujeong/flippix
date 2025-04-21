@@ -13,6 +13,7 @@
 	} from '@/stores/timerStore';
 	import Controller from '@/components/Controller.svelte';
 	import FlipDisplay from '@/components/FlipDisplay.svelte';
+	import Toast from '@/components/Toast.svelte';
 
 	let isRunning = true;
 	let isTimerMode = false;
@@ -75,6 +76,8 @@
 		</div>
 	{/if}
 </div>
+
+<Toast message="Taking a break! Timer paused." />
 
 <style lang="scss" scoped>
 	.container {
