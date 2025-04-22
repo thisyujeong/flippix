@@ -9,15 +9,16 @@
 		startTimer,
 		pauseTimer,
 		resumeTimer,
-		restartTimer
+		restartTimer,
+		isTimer
 	} from '@/stores/timerStore';
+	import { toastStore } from '@/stores/toastStore';
 	import Controller from '@/components/Controller.svelte';
 	import FlipDisplay from '@/components/FlipDisplay.svelte';
 	import ToastContainer from '@/components/ToastContainer.svelte';
-	import { toastStore } from '@/stores/toastStore';
+	import Header from '@/components/Header.svelte';
 
 	let isRunning = true;
-	let isTimerMode = false;
 	let timerValue: Time | null = null;
 	let initialTime = getTimer(page.url.search);
 
@@ -32,18 +33,16 @@
 
 		// 유효한 timer 값이 있을 경우 타이머 모드로 전환
 		if (isValidTimer && timerValue) {
-			isTimerMode = true;
 			startTimer(timerValue, handleComplete);
 		}
 		// 그렇지 않으면 일반 시계 모드 유지
 		else {
-			isTimerMode = false;
 			startClock();
 		}
 	});
 
 	function togglePauseResume() {
-		if (!isTimerMode) return;
+		if (!$isTimer) return;
 		if (isRunning) {
 			pauseTimer();
 
@@ -67,23 +66,27 @@
 	});
 </script>
 
+<Header />
+
+<!-- Toast -->
 <ToastContainer />
 
+<!-- Content -->
 <div class="container">
 	<FlipDisplay />
-
-	<!-- 타이머 모드일 때만 컨트롤 버튼 표시 -->
-	{#if isTimerMode && initialTime}
-		<div class="controller">
-			<Controller
-				{initialTime}
-				{isRunning}
-				onPauseResume={togglePauseResume}
-				onRestart={handleRestart}
-			/>
-		</div>
-	{/if}
 </div>
+
+<!-- 타이머 모드일 때만 컨트롤 버튼 표시 -->
+{#if $isTimer && initialTime}
+	<div class="controller">
+		<Controller
+			{initialTime}
+			{isRunning}
+			onPauseResume={togglePauseResume}
+			onRestart={handleRestart}
+		/>
+	</div>
+{/if}
 
 <style lang="scss" scoped>
 	.container {
@@ -97,7 +100,9 @@
 
 	.controller {
 		position: fixed;
-		bottom: 40px;
-		width: calc(100vw - 12rem);
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 40px 6rem;
 	}
 </style>

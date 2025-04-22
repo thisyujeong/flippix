@@ -98,22 +98,11 @@
 		gap: 1.2rem;
 		button {
 			width: 120px;
-			padding: 12px;
-			color: var(--text-color);
-			font-size: 16px;
-			background: var(--controller-bg);
-			border-radius: 999px;
 			span {
 				padding-left: 28px;
 				background-size: 20px;
 				background-position: left center;
 				background-repeat: no-repeat;
-			}
-			&:hover {
-				background: var(--active-color);
-			}
-			&:active {
-				transform: scale(0.95);
 			}
 		}
 

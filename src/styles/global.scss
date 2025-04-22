@@ -26,9 +26,11 @@ html {
 	--error-color: #ff4834;
 	--info-color: #3478ff;
 
+	--app-background: linear-gradient(135deg, #e5ecf0, #ffffff);
+	--surface-background: #e6ecf0;
+
 	--text-color: var(--basic-black);
 	--text-reverse-color: var(--basic-white);
-	--background: linear-gradient(135deg, #e5ecf0, #ffffff);
 	--divider-color: #131313;
 
 	// panel
@@ -40,15 +42,11 @@ html {
 	--flip-upper-color: linear-gradient(to top, #131313, #252525);
 	--flip-lower-color: linear-gradient(to bottom, #1c1c1c, #292929);
 
-	// controller
-	--controller-bg: #e6ecf0;
-	--controller-hover-bg: #d1dbe1;
-
 	// progress
 	--progress-track-bg: #eee;
 
 	// toast
-	--toast-bg: var(--controller-bg);
+	--toast-bg: var(--surface-background);
 	--toast-border: #d9e0e5;
 	--toast-shadow: 0px 2px 20px #e3e8ee;
 	--toast-icon: #72797e;
@@ -56,24 +54,22 @@ html {
 
 html[data-theme='dark'] {
 	// common
+	--app-background: linear-gradient(135deg, #1c1e21, #282d33);
+	--surface-background: var(--basic-black);
+
 	--text-color: var(--basic-white);
-	--background: linear-gradient(135deg, #1c1e21, #282d33);
+	--text-reverse-color: var(--basic-black);
 	--divider-color: #ececec;
 
 	// panel
 	--panel-color: #1b1e23;
 	--panel-text-color: var(--basic-white);
-	--text-reverse-color: var(--basic-black);
 	--panel-border-color: #71768280;
 	--panel-shadow: 0px 4px 6px 2px #00000090;
 
 	--flip-text-color: var(--basic-black);
 	--flip-upper-color: linear-gradient(to top, #d1d6da, #ffffff);
 	--flip-lower-color: linear-gradient(to bottom, #d1d6da, #e9edef);
-
-	// controller
-	--controller-bg: var(--basic-black);
-	--controller-hover-bg: #636363;
 
 	// progress
 	--progress-track-bg: var(--basic-black);
@@ -87,5 +83,21 @@ html[data-theme='dark'] {
 
 body {
 	color: var(--text-color);
-	background: var(--background);
+	background: var(--app-background);
+}
+
+button {
+	padding: 12px;
+	color: var(--text-color);
+	font-size: 16px;
+	border-radius: 999px;
+	background-color: var(--surface-background);
+
+	&:hover {
+		background: var(--active-color);
+		color: var(--basic-black);
+	}
+	&:active {
+		transform: scale(0.95);
+	}
 }

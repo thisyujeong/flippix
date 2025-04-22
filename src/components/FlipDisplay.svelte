@@ -6,20 +6,20 @@
 
 <div class="clock">
 	<div class="clock-item">
-		<span>Hour</span>
-		<div class="clock-digit">
+		<span class="clock-item__label">H</span>
+		<div class="clock-item__digit">
 			<FilpDigit type="hour" time={formatDigit($time.hour)} />
 		</div>
 	</div>
 	<div class="clock-item">
-		<span>Minute</span>
-		<div class="clock-digit">
+		<span class="clock-item__label">M</span>
+		<div class="clock-item__digit">
 			<FilpDigit type="minute" time={formatDigit($time.min)} />
 		</div>
 	</div>
 	<div class="clock-item">
-		<span>Seconds</span>
-		<div class="clock-digit">
+		<span class="clock-item__label">S</span>
+		<div class="clock-item__digit">
 			<FilpDigit type="seconds" time={formatDigit($time.sec)} />
 		</div>
 	</div>
@@ -32,20 +32,29 @@
 		gap: 6rem;
 
 		&-item {
+			position: relative;
 			display: flex;
 			align-items: center;
 			flex-direction: column;
 			gap: 3rem;
 
-			span {
+			&__label {
+				top: -4rem;
+				display: inline-block;
+				position: absolute;
+				color: #929aad;
 				font-size: 2rem;
-				text-transform: uppercase;
+				text-transform: capitalize;
 				opacity: 0.85;
+				font-size: clamp(16px, 2rem, 20px);
+			}
+			&__digit {
+				position: relative;
 			}
 		}
 
 		&-item + &-item {
-			.clock-digit::before {
+			.clock-item__digit::before {
 				content: '';
 				display: block;
 				position: absolute;
@@ -57,10 +66,6 @@
 				background: var(--divider-color);
 				border-radius: 10rem;
 			}
-		}
-
-		&-digit {
-			position: relative;
 		}
 	}
 </style>

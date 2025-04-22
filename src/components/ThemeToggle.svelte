@@ -17,26 +17,26 @@
 
 <style lang="scss" scoped>
 	.switch {
+		padding: 12px 16px;
 		display: flex;
 		align-items: center;
 		gap: 8px;
 
 		&-icon {
+			position: relative;
 			width: 20px;
 			height: 20px;
-			transition: 0.3s;
+			transition: transform 0.3s;
+			color: inherit;
 
 			svg {
-				width: 20px;
-				height: 20px;
-				color: var(--text-color);
+				width: 100%;
+				height: 100%;
 			}
 		}
 
 		&-text {
-			font-size: 16px;
 			text-transform: uppercase;
-			color: var(--text-color);
 		}
 
 		&.on {

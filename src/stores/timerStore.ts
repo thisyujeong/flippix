@@ -5,6 +5,7 @@ import { get, writable } from 'svelte/store';
 export const time = writable<Time>({ hour: 0, min: 0, sec: 0 });
 export const progress = writable(100); // 0 ~ 100%
 export const totalSeconds = writable(0); // 전체 타이머 길이
+export const isTimer = writable(false); // 현재 타이머 모드 여부
 
 let interval: ReturnType<typeof setInterval> | null = null;
 let currentSeconds: number = 0;
@@ -17,6 +18,7 @@ let initialTimerValue: Time | null = null;
  */
 export function startClock() {
 	clear();
+	isTimer.set(false);
 	time.set(getDateTime());
 	interval = setInterval(() => {
 		time.set(getDateTime());
@@ -38,6 +40,7 @@ export function startTimer(initialTime: Time, onComplete?: () => void) {
 
 	time.set(toTimeObject(currentSeconds)); // 초기 시간 표시
 	progress.set(100);
+	isTimer.set(true);
 
 	interval = setInterval(() => {
 		currentSeconds--;
@@ -97,4 +100,5 @@ export function clear() {
 	remainingAtPause = null;
 	onCompleteCallback = null;
 	initialTimerValue = null;
+	isTimer.set(false);
 }

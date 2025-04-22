@@ -1,12 +1,14 @@
 <script lang="ts">
+	import { isTimer } from '@/stores/timerStore';
 	import ThemeToggle from './ThemeToggle.svelte';
 </script>
 
 <header class="header">
-	<!-- <div class="header-id">
-		<h1>Digital Flip Clock</h1>
-		<p>ⓒ thisyujeong</p>
-	</div> -->
+	<div class="mode">
+		<span class="mode-text">
+			{#if $isTimer}Timer Mode{:else}Clock Mode{/if}
+		</span>
+	</div>
 
 	<ThemeToggle />
 </header>
@@ -18,23 +20,22 @@
 		left: 0;
 		right: 0;
 		text-align: center;
-		padding: 32px 0;
+		padding: 32px 6rem;
 		display: flex;
 		align-items: center;
-		flex-direction: column;
+		justify-content: space-between;
 		gap: 3rem;
 	}
 
-	.header-id {
-		h1 {
-			margin: 0;
-			font-weight: 500;
-			font-size: 20px;
-		}
-		p {
-			margin-top: 0.4em;
+	.mode {
+		color: #929aad;
+		border-radius: 16px;
+
+		&-text {
 			font-size: 14px;
-			opacity: 0.75;
+			color: inherit;
+			font-weight: bold;
+			font-style: italic;
 		}
 	}
 </style>
