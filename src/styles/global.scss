@@ -21,7 +21,10 @@ html {
 	// common
 	--basic-white: #ffffff;
 	--basic-black: #111111;
+
 	--active-color: #42de6c;
+	--error-color: #ff4834;
+	--info-color: #3478ff;
 
 	--text-color: var(--basic-black);
 	--text-reverse-color: var(--basic-white);
@@ -47,6 +50,8 @@ html {
 	// toast
 	--toast-bg: var(--controller-bg);
 	--toast-border: #d9e0e5;
+	--toast-shadow: 0px 2px 20px #e3e8ee;
+	--toast-icon: #72797e;
 }
 
 html[data-theme='dark'] {
@@ -76,6 +81,8 @@ html[data-theme='dark'] {
 	// toast
 	--toast-bg: #3d4145;
 	--toast-border: #525659;
+	--toast-shadow: 0px 2px 20px #1b1e23;
+	--toast-icon: #e2e7eb;
 }
 
 body {

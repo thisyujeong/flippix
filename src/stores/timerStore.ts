@@ -1,4 +1,4 @@
-import type { Time } from '@/types/time';
+import type { Time } from '@/types';
 import { getDateTime, toSeconds, toTimeObject } from '@/utils';
 import { get, writable } from 'svelte/store';
 

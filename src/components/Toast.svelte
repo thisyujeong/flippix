@@ -1,46 +1,86 @@
 <script lang="ts">
-	let { message } = $props();
+	import type { ToastStatus } from '@/types';
+	import { fade, fly } from 'svelte/transition';
+
+	interface ToastProps {
+		status?: ToastStatus;
+		text: string;
+	}
+
+	let { status = 'info', text }: ToastProps = $props();
 </script>
 
-<div class={['toast']}>
-	<span class="toast-icon">
-		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
-			<path
-				d="M12.5 7.5C12.5 7.77614 12.2761 8 12 8C11.7239 8 11.5 7.77614 11.5 7.5C11.5 7.22386 11.7239 7 12 7C12.2761 7 12.5 7.22386 12.5 7.5Z"
-				fill="currentColor"
-				stroke="currentColor"
-			/>
-			<path d="M12 17V10" stroke="currentColor" stroke-width="2" />
-		</svg>
-	</span>
-	<p class="toast-text">{message}</p>
+<div
+	class={['toast', 'toast-' + status]}
+	in:fly={{ y: 45, duration: 200 }}
+	out:fade={{ duration: 300 }}
+>
+	<div class="toast-status"></div>
+	<p class="toast-text">{text}</p>
 </div>
 
 <style lang="scss">
 	.toast {
-		position: fixed;
-		left: 50%;
-		bottom: 40px;
-		padding: 12px 20px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 8px;
+		gap: 12px;
+		padding: 12px 20px;
 		border-radius: 16px;
 		border: 1px solid var(--toast-border);
 		background-color: var(--toast-bg);
-		transform: translateX(-50%);
+		box-shadow: var(--toast-shadow);
 
-		&-icon {
-			line-height: 0;
-			svg {
-				width: 20px;
-				height: 20px;
+		&-status {
+			position: relative;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background-color: var(--info-color);
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 100%;
+				height: 100%;
+				border-radius: 100%;
+				background-color: inherit;
+				transform: translate(-50%, -50%);
+				animation: pinned 1s infinite 1s;
 			}
 		}
+
 		&-text {
 			font-size: 16px;
+		}
+
+		&:hover {
+			.toast-close {
+				display: block;
+			}
+		}
+
+		/* status (default: info) */
+		&-success .toast-status {
+			background-color: var(--active-color);
+		}
+		&-error .toast-status {
+			background-color: var(--error-color);
+		}
+	}
+
+	@keyframes pinned {
+		from {
+			width: 100%;
+			height: 100%;
+			opacity: 0.8;
+		}
+		to {
+			width: 200%;
+			height: 200%;
+			opacity: 0;
 		}
 	}
 </style>

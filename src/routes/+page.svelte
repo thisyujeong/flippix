@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { onDestroy, onMount } from 'svelte';
 	import { getTimer } from '@/utils';
-	import type { Time } from '@/types/time';
+	import type { Time } from '@/types';
 	import {
 		clear,
 		startClock,
@@ -13,7 +13,8 @@
 	} from '@/stores/timerStore';
 	import Controller from '@/components/Controller.svelte';
 	import FlipDisplay from '@/components/FlipDisplay.svelte';
-	import Toast from '@/components/Toast.svelte';
+	import ToastContainer from '@/components/ToastContainer.svelte';
+	import { toastStore } from '@/stores/toastStore';
 
 	let isRunning = true;
 	let isTimerMode = false;
@@ -45,8 +46,12 @@
 		if (!isTimerMode) return;
 		if (isRunning) {
 			pauseTimer();
+
+			toastStore.show({ text: 'Taking a break! Timer paused.', status: 'info' });
 		} else {
 			resumeTimer();
+
+			toastStore.show({ text: "Let's keep going! Timer resumed.", status: 'success' });
 		}
 		isRunning = !isRunning;
 	}
@@ -54,12 +59,15 @@
 	function handleRestart() {
 		restartTimer();
 		isRunning = true;
+		toastStore.show({ text: 'Starting over! Timer restarted.', status: 'error' });
 	}
 
 	onDestroy(() => {
 		clear();
 	});
 </script>
+
+<ToastContainer />
 
 <div class="container">
 	<FlipDisplay />
@@ -76,8 +84,6 @@
 		</div>
 	{/if}
 </div>
-
-<Toast message="Taking a break! Timer paused." />
 
 <style lang="scss" scoped>
 	.container {

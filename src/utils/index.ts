@@ -1,4 +1,4 @@
-import type { Time } from '@/types/time';
+import type { Time } from '@/types';
 import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 /**

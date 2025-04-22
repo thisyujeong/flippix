@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { theme } from '@/stores/themeStore';
 	import TimeProgress from './TimeProgress.svelte';
-	import type { Time } from '@/types/time';
+	import type { Time } from '@/types';
 
 	interface ControllerProps {
 		initialTime: Time;
