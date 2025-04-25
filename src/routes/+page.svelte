@@ -10,21 +10,25 @@
 		pauseTimer,
 		resumeTimer,
 		restartTimer,
-		isTimer
+		isTimer,
+		isEnd
 	} from '@/stores/timerStore';
 	import { toastStore } from '@/stores/toastStore';
 	import Controller from '@/components/Controller.svelte';
 	import FlipDisplay from '@/components/FlipDisplay.svelte';
 	import ToastContainer from '@/components/ToastContainer.svelte';
 	import Header from '@/components/Header.svelte';
+	import TimeOver from '@/components/TimeOver.svelte';
+	import { goto } from '$app/navigation';
 
 	let isRunning = true;
 	let timerValue: Time | null = null;
 	let initialTime = getTimer(page.url.search);
 
 	const handleComplete = () => {
-		alert('⏰ 타이머가 종료되었습니다!');
 		isRunning = false;
+
+		// optionally stop the ticking sound or any animations here
 	};
 
 	onMount(() => {
@@ -45,14 +49,18 @@
 		if (!$isTimer) return;
 		if (isRunning) {
 			pauseTimer();
-
 			toastStore.show({ text: 'Taking a break! Timer paused.', status: 'info' });
 		} else {
 			resumeTimer();
-
 			toastStore.show({ text: "Let's keep going! Timer resumed.", status: 'success' });
 		}
 		isRunning = !isRunning;
+	}
+
+	function handleStartClock() {
+		startClock();
+		goto(page.url.pathname, { replaceState: true });
+		toastStore.show({ text: 'Clock mode activated!', status: 'info' });
 	}
 
 	function handleRestart() {
@@ -86,6 +94,10 @@
 			onRestart={handleRestart}
 		/>
 	</div>
+{/if}
+
+{#if $isTimer && $isEnd}
+	<TimeOver onRestart={handleRestart} onStartClock={handleStartClock} />
 {/if}
 
 <style lang="scss" scoped>

@@ -6,6 +6,7 @@ export const time = writable<Time>({ hour: 0, min: 0, sec: 0 });
 export const progress = writable(100); // 0 ~ 100%
 export const totalSeconds = writable(0); // 전체 타이머 길이
 export const isTimer = writable(false); // 현재 타이머 모드 여부
+export const isEnd = writable(false); // 타이머 종료 여부
 
 let interval: ReturnType<typeof setInterval> | null = null;
 let currentSeconds: number = 0;
@@ -31,7 +32,7 @@ export function startClock() {
  * @param onComplete - 타이머 종료 시 호출되는 콜백함수 (선택사항)
  */
 export function startTimer(initialTime: Time, onComplete?: () => void) {
-	clear();
+	clear(true, true); // 타이머 모드와 초기값을 모두 유지하면서 clear
 	initialTimerValue = initialTime;
 	onCompleteCallback = onComplete ?? null;
 
@@ -41,6 +42,7 @@ export function startTimer(initialTime: Time, onComplete?: () => void) {
 	time.set(toTimeObject(currentSeconds)); // 초기 시간 표시
 	progress.set(100);
 	isTimer.set(true);
+	isEnd.set(false);
 
 	interval = setInterval(() => {
 		currentSeconds--;
@@ -48,8 +50,10 @@ export function startTimer(initialTime: Time, onComplete?: () => void) {
 		progress.set(Math.floor((currentSeconds / get(totalSeconds)) * 100)); // 진행률 계산
 
 		if (currentSeconds <= 0) {
-			clear();
-			onCompleteCallback?.();
+			const callback = onCompleteCallback; // ✅ 콜백 백업
+			clear(true, true); // 타이머 모드 유지
+			isEnd.set(true);
+			callback?.();
 		}
 	}, 1000);
 }
@@ -82,15 +86,17 @@ export function resumeTimer() {
  */
 export function restartTimer() {
 	if (initialTimerValue) {
+		isEnd.set(false);
 		startTimer(initialTimerValue, onCompleteCallback ?? undefined);
 	}
 }
 
 /**
- * - 현재 실행 중인 시계나 타이머를 정리
- * - interval을 중지하고 내부 상태를 초기화
+ * 현재 실행중인 시계나 타이머를 정리, interval을 중지하고 내부 상태를 초기화
+ * @param preserveIsTimer - isTimer 상태도 함께 초기화할지 여부 (default: false)
+ * @param preserveInitialTimer - initialTimer 값도 함께 초기화할지 여부 (default: false)
  */
-export function clear() {
+export function clear(preserveIsTimer = false, preserveInitialTimer = false) {
 	if (interval) {
 		clearInterval(interval);
 		interval = null;
@@ -99,6 +105,13 @@ export function clear() {
 	currentSeconds = 0;
 	remainingAtPause = null;
 	onCompleteCallback = null;
-	initialTimerValue = null;
-	isTimer.set(false);
+	isEnd.set(false);
+
+	if (!preserveInitialTimer) {
+		initialTimerValue = null;
+	}
+	// 필요할 때만 false
+	if (!preserveIsTimer) {
+		isTimer.set(false);
+	}
 }
