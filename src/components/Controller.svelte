@@ -37,10 +37,10 @@
 		</div>
 
 		<div class={['control-buttons', $theme]}>
-			<button class={isRunning ? 'pause' : 'resume'} onclick={onPauseResume}>
+			<button class={['button', isRunning ? 'pause' : 'resume']} onclick={onPauseResume}>
 				<span>{isRunning ? 'Pause' : 'Resume'}</span>
 			</button>
-			<button class="restart" onclick={onRestart}>
+			<button class={['button', 'restart']} onclick={onRestart}>
 				<span>Restart</span>
 			</button>
 		</div>

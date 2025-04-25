@@ -23,6 +23,7 @@ html {
 	--basic-black: #111111;
 
 	--active-color: #42de6c;
+	--active-color-02: #4ded78;
 	--error-color: #ff4834;
 	--info-color: #3478ff;
 
@@ -86,12 +87,13 @@ body {
 	background: var(--app-background);
 }
 
-button {
+.button {
 	padding: 12px;
 	color: var(--text-color);
 	font-size: 16px;
 	border-radius: 999px;
 	background-color: var(--surface-background);
+	transition: background-color 0.3s ease;
 
 	&:hover {
 		background: var(--active-color);
@@ -99,5 +101,12 @@ button {
 	}
 	&:active {
 		transform: scale(0.95);
+	}
+
+	&.primary {
+		background-color: var(--active-color);
+		&:hover {
+			background-color: var(--active-color-02);
+		}
 	}
 }
