@@ -25,8 +25,9 @@ theme.subscribe((value) => {
 });
 
 // 테마 토글 함수
-const toggleTheme = () => {
+const toggleTheme = (callback?: () => void) => {
 	theme.update((prev) => (prev === 'light' ? 'dark' : 'light'));
+	callback?.();
 };
 
 export { theme, toggleTheme };

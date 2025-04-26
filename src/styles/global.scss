@@ -104,6 +104,7 @@ body {
 	}
 
 	&.primary {
+		color: var(--basic-black);
 		background-color: var(--active-color);
 		&:hover {
 			background-color: var(--active-color-02);

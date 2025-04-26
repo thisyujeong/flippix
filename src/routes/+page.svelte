@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { onDestroy, onMount } from 'svelte';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import { getTimer } from '@/utils';
+	import { playSound } from '@/lib/sounds';
 	import type { Time } from '@/types';
 	import {
 		clear,
@@ -19,31 +21,27 @@
 	import ToastContainer from '@/components/ToastContainer.svelte';
 	import Header from '@/components/Header.svelte';
 	import TimeOver from '@/components/TimeOver.svelte';
-	import { goto } from '$app/navigation';
 
 	let isRunning = true;
 	let timerValue: Time | null = null;
 	let initialTime = getTimer(page.url.search);
 
-	const handleComplete = () => {
-		isRunning = false;
-
-		// optionally stop the ticking sound or any animations here
-	};
-
 	onMount(() => {
 		timerValue = getTimer(page.url.search);
 		const isValidTimer = timerValue && Object.values(timerValue).some((v) => v > 0);
 
-		// 유효한 timer 값이 있을 경우 타이머 모드로 전환
 		if (isValidTimer && timerValue) {
+			// 유효한 timer 값이 있을 경우 타이머 모드로 전환
 			startTimer(timerValue, handleComplete);
-		}
-		// 그렇지 않으면 일반 시계 모드 유지
-		else {
+		} else {
+			// 그렇지 않으면 일반 시계 모드 유지
 			startClock();
 		}
 	});
+
+	function handleComplete() {
+		isRunning = false;
+	}
 
 	function togglePauseResume() {
 		if (!$isTimer) return;
@@ -54,17 +52,20 @@
 			resumeTimer();
 			toastStore.show({ text: "Let's keep going! Timer resumed.", status: 'success' });
 		}
+		playSound('button');
 		isRunning = !isRunning;
 	}
 
 	function handleStartClock() {
 		startClock();
+		playSound('button');
 		goto(page.url.pathname, { replaceState: true });
 		toastStore.show({ text: 'Clock mode activated!', status: 'info' });
 	}
 
 	function handleRestart() {
 		restartTimer();
+		playSound('button');
 		isRunning = true;
 		toastStore.show({ text: 'Starting over! Timer restarted.', status: 'error' });
 	}
