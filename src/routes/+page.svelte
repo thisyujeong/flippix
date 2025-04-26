@@ -21,6 +21,7 @@
 	import ToastContainer from '@/components/ToastContainer.svelte';
 	import Header from '@/components/Header.svelte';
 	import TimeOver from '@/components/TimeOver.svelte';
+	import TimerGuide from '@/components/TimerGuide.svelte';
 
 	let isRunning = true;
 	let timerValue: Time | null = null;
@@ -75,6 +76,7 @@
 	});
 </script>
 
+<!-- Header -->
 <Header />
 
 <!-- Toast -->
@@ -101,6 +103,13 @@
 	<TimeOver onRestart={handleRestart} onStartClock={handleStartClock} />
 {/if}
 
+<!-- 기본 시계 모드 -->
+{#if !$isTimer}
+	<div class="guide">
+		<TimerGuide />
+	</div>
+{/if}
+
 <style lang="scss" scoped>
 	.container {
 		width: 100vw;
@@ -117,5 +126,12 @@
 		right: 0;
 		bottom: 0;
 		padding: 40px 6rem;
+	}
+
+	.guide {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
 	}
 </style>

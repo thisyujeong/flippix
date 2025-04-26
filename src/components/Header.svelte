@@ -4,7 +4,8 @@
 </script>
 
 <header class="header">
-	<div class="mode">
+	<div class="header-left">
+		<h1 class="logo">Flippix</h1>
 		<span class="mode-text">
 			{#if $isTimer}Timer Mode{:else}Clock Mode{/if}
 		</span>
@@ -25,17 +26,21 @@
 		align-items: flex-start;
 		justify-content: space-between;
 		gap: 3rem;
+
+		&-left {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 8px;
+		}
 	}
 
-	.mode {
-		color: #929aad;
-		border-radius: 16px;
+	.logo {
+		font-size: 18px;
+	}
 
-		&-text {
-			font-size: 14px;
-			color: inherit;
-			font-weight: bold;
-			font-style: italic;
-		}
+	.mode-text {
+		color: var(--basic-shallow);
+		font-size: 14px;
 	}
 </style>
