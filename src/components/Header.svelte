@@ -1,17 +1,24 @@
 <script lang="ts">
 	import { isTimer } from '@/stores/timerStore';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import FullscreenButton from './FullscreenButton.svelte';
+	import { isFullscreen } from '@/stores/fullscreenStore';
 </script>
 
 <header class="header">
 	<div class="header-left">
-		<h1 class="logo">Flippix</h1>
-		<span class="mode-text">
-			{#if $isTimer}Timer Mode{:else}Clock Mode{/if}
-		</span>
+		{#if !$isFullscreen}
+			<h1 class="logo">Flippix</h1>
+			<span class="mode-text">
+				{#if $isTimer}Timer Mode{:else}Clock Mode{/if}
+			</span>
+		{/if}
 	</div>
 
-	<ThemeToggle />
+	<div class="header-right">
+		<FullscreenButton />
+		<ThemeToggle />
+	</div>
 </header>
 
 <style lang="scss" scoped>
@@ -31,6 +38,11 @@
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
+			gap: 8px;
+		}
+		&-right {
+			display: flex;
+			align-items: center;
 			gap: 8px;
 		}
 	}

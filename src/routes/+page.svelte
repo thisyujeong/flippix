@@ -22,6 +22,7 @@
 	import Header from '@/components/Header.svelte';
 	import TimeOver from '@/components/TimeOver.svelte';
 	import TimerGuide from '@/components/TimerGuide.svelte';
+	import { isFullscreen } from '@/stores/fullscreenStore';
 
 	let isRunning = true;
 	let timerValue: Time | null = null;
@@ -88,7 +89,7 @@
 </div>
 
 <!-- 타이머 모드일 때만 컨트롤 버튼 표시 -->
-{#if $isTimer && initialTime}
+{#if $isTimer && initialTime && !$isFullscreen}
 	<div class="controller">
 		<Controller
 			{initialTime}
@@ -104,7 +105,7 @@
 {/if}
 
 <!-- 기본 시계 모드 -->
-{#if !$isTimer}
+{#if !$isTimer && !$isFullscreen}
 	<div class="guide">
 		<TimerGuide />
 	</div>
