@@ -1,5 +1,7 @@
 # Flippix
 
+**배포**: [flippix-clock.vercel.app/](https://flippix-clock.vercel.app/)
+
 Flippix는 아날로그 플립 시계의 감성을 디지털로 재해석한 프로젝트입니다.  
 Flip과 Pixel의 합성어인 "Flippix"는 클래식한 플립 시계 디자인을 현대적인 웹 기술로 구현하며, 시계와 타이머 기능을 모두 제공합니다.
 
@@ -95,9 +97,10 @@ npm run build
 
 URL에 `?timer=1:30:00` 과 같은 Query String을 추가하여 타이머를 설정할 수 있습니다.
 
-예시: `https://flippix.vercel.app/?timer=1:30:00`
+예시: `https://flippix-clock.vercel.app/?timer=1:30:00`
 
 <br/>
+
 ## TODO
 
 - [ ] 추후 타이머 설정 인터페이스 제작 고려
