@@ -27,35 +27,52 @@ export function startClock() {
 }
 
 /**
+ * 타이머 상태를 초기화하는 공통 함수
+ * @param baseTime - 기준 시간 (초기 시작, 혹은 남은 시간)
+ */
+function initializeTimerState(baseTime: Time) {
+	currentSeconds = toSeconds(baseTime);
+	totalSeconds.set(currentSeconds);
+
+	time.set(toTimeObject(currentSeconds));
+	progress.set(100);
+	isTimer.set(true);
+	isEnd.set(false);
+}
+
+/**
+ * 타이머 동작 시작 (초 단위 currentSeconds 기준)
+ */
+function startInterval() {
+	if (interval) clearInterval(interval);
+
+	interval = setInterval(() => {
+		currentSeconds--;
+		time.set(toTimeObject(currentSeconds));
+		progress.set(Math.floor((currentSeconds / get(totalSeconds)) * 100));
+
+		if (currentSeconds <= 0) {
+			const callback = onCompleteCallback; // 콜백 백업
+			clear(true, true);
+			isEnd.set(true);
+			callback?.();
+		}
+	}, 1000);
+}
+
+/**
  * 타이머모드 시작
  * @param initialTime - 시작 시간(시, 분, 초)
  * @param onComplete - 타이머 종료 시 호출되는 콜백함수 (선택사항)
  */
 export function startTimer(initialTime: Time, onComplete?: () => void) {
 	clear(true, true); // 타이머 모드와 초기값을 모두 유지하면서 clear
+
 	initialTimerValue = initialTime;
 	onCompleteCallback = onComplete ?? null;
 
-	currentSeconds = toSeconds(initialTime); // 초 단위로 환산
-	totalSeconds.set(currentSeconds);
-
-	time.set(toTimeObject(currentSeconds)); // 초기 시간 표시
-	progress.set(100);
-	isTimer.set(true);
-	isEnd.set(false);
-
-	interval = setInterval(() => {
-		currentSeconds--;
-		time.set(toTimeObject(currentSeconds));
-		progress.set(Math.floor((currentSeconds / get(totalSeconds)) * 100)); // 진행률 계산
-
-		if (currentSeconds <= 0) {
-			const callback = onCompleteCallback; // ✅ 콜백 백업
-			clear(true, true); // 타이머 모드 유지
-			isEnd.set(true);
-			callback?.();
-		}
-	}, 1000);
+	initializeTimerState(initialTime);
+	startInterval();
 }
 
 /**
@@ -76,7 +93,8 @@ export function pauseTimer() {
  */
 export function resumeTimer() {
 	if (remainingAtPause) {
-		startTimer(remainingAtPause, onCompleteCallback ?? undefined);
+		initializeTimerState(remainingAtPause);
+		startInterval();
 		remainingAtPause = null;
 	}
 }
